@@ -1,51 +1,48 @@
 <p align="center">
-<img src="https://github.com/timminator/VideOCR/blob/master/Pictures/VideOCR.png" alt="VideOCR Icon" width="128">
+<img src="https://github.com/timminator/VideOCR/raw/master/Pictures/VideOCR.png" alt="VideOCR 图标" width="128">
   <h1 align="center">VideOCR</h1>
   <p align="center">
-    Extract hardcoded subtitles from videos!
+    从视频中提取硬编码字幕！
     <br />
   </p>
 </p>
 
 <br>
 
-## ℹ About
+## ℹ 关于
 
-Extract hardcoded (burned-in) subtitles from videos via a simple to use GUI by utilizing the [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) OCR engine. Everything can be easily configured via a few clicks.
+通过简单易用的图形界面，利用 [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) OCR引擎，从视频中提取硬编码（烧录）字幕。所有配置均可通过点击轻松完成。
 
-This repository also provides a version of VideOCR that can be used from the command line in combination with PaddleOCR.
+此仓库还提供了可与PaddleOCR结合使用的命令行版本VideOCR。
 
-The latest release incorporates the newest version of PaddleOCR with greatly improved OCR capabilities.
+最新版本集成了PaddleOCR的最新版本，OCR能力大幅提升。
 
-## Setup
+## 安装
 
 ### Windows:
-You can either install it with the setup installer or you can just download a folder with all the required files including the executable and unzip it to your desired location.
+您可以使用安装程序进行安装，也可以直接下载包含所有必需文件（包括可执行文件）的压缩包，解压到目标位置即可。
 
 ### Linux:
-Download the tarball archive from the releases page and unzip it to your desired location.
-Optionally you can add VideOCR to your App menus if you want to.
-For this step open a terminal where you unpacked the archive and run
-
+从发布页面下载压缩包，解压到目标位置。  
+如需将VideOCR添加到应用程序菜单，可在解压后的目录中打开终端并运行以下命令：
 ```
 ./install_videocr.sh
 ```
-This will create a shortcut for VideOCR. You can remove it via:  
-
+此命令将创建VideOCR的快捷方式。如需移除，可运行：  
 ```
 ./uninstall_videocr.sh
 ```
 
-## Usage
+## 使用说明
 
-Import a video and seek through the video via the timeline. You can also use the right and left arrow keys. Then you can just draw a crop box over the right part of the video. Use click+drag to select. Afterwards you can start the subtitle extraction process via the "Run" Button.
+导入视频后，可通过时间轴或左右方向键浏览视频内容。通过点击拖拽的方式在视频上绘制裁剪框，选择字幕区域。完成后，点击“运行”按钮开始字幕提取。
 
-Further options can be configured in the "Advanced Settings" Tab. You can find more info about them in the parameters section available in the CLI version.
-![image](https://github.com/timminator/VideOCR/blob/master/Pictures/GUI.png)
+更多选项可在“高级设置”选项卡中配置，详细信息可参考CLI版本的参数说明。
+![image](https://github.com/timminator/VideOCR/raw/master/Pictures/GUI.png)
 
-## Usage (CLI version)
-  
-There is also a CLI version available. Unzip the archive to your desired location and open a terminal in there. Afterwards you can run the following command:
+## 命令行版本（CLI）使用说明
+
+解压压缩包后，在目标位置打开终端，运行以下命令：
 
 ### Windows:
 ```
@@ -53,150 +50,144 @@ There is also a CLI version available. Unzip the archive to your desired locatio
 ```
 
 ### Linux:
-
 ```
-./videocr-cli.exe -h
+./videocr-cli -h
 ```
 
-### Example usage (Windows):
+### 示例用法（Windows）:
 ```
-.\videocr-cli.exe --video_path "Path\to\your\video\example.mp4" --output "Path\to\your\desired\subtitle\location\example.srt" --lang en --time_start "18:40" --use_gpu true
+.\videocr-cli.exe --video_path "视频路径\example.mp4" --output "字幕保存路径\example.srt" --lang en --time_start "18:40" --use_gpu true
 ```
-More info about the arguments can be found in the parameters section further down.
+更多参数说明请参考下文。
 
-## Performance
+## 性能说明
 
-The OCR process can be slow on the CPU. Using this in combination with a GPU is highly recommended.
+在CPU上运行OCR过程可能较慢，建议搭配GPU使用。
 
-## Tips
+## 小贴士
 
-When cropping, leave a bit of buffer space above and below the text to ensure accurate readings, but also don't make the box to large.
+裁剪时，在文字上下方留出一定的缓冲空间以提高识别准确率，但不要将裁剪框设置得过大。
 
-### Quick Configuration Cheatsheet
+### 快速配置参考
 
-|| More Speed | More Accuracy | Notes
+|| 更高速度 | 更高准确率 | 备注
 -|------------|---------------|--------
-Input Video Quality       | Use lower quality           | Use higher quality  | Performance impact of using higher resolution video can be reduced with cropping
-`frames_to_skip`          | Higher number               | Lower number        | For perfectly accurate timestamps this parameter needs to be set to 0.
-`SSIM threshold`          | Lower threshold             | Higher Threshold    | If the SSIM between consecutive frames exceeds this threshold, the frame is considered similar and skipped for OCR. A lower value can greatly reduce the number of images OCR needs to be performed on.
+输入视频质量       | 使用较低质量           | 使用较高质量  | 高分辨率视频的性能影响可通过裁剪减轻
+`frames_to_skip`          | 数值更高               | 数值更低        | 如需完全准确的时间戳，此参数需设为0。
+`SSIM阈值`          | 阈值更低             | 阈值更高    | 若连续帧的SSIM超过此阈值，则跳过OCR。较低的值可显著减少OCR处理的帧数。
 
-
-## Command Line Parameters (CLI version)
+## 命令行参数说明（CLI版本）
 
 - `video_path`
 
-  Path for the video where subtitles should be extracted from.
+  待提取字幕的视频路径。
 
 - `output`
 
-  Path for the desired location where the .srt file should be stored.
+  字幕文件（.srt）保存路径。
 
 - `lang`
 
-  The language of the subtitles. See [PaddleOCR docs](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.10/docs/ppocr/blog/multi_languages.en.md#5-support-languages-and-abbreviations) for list of supported languages and their abbreviations.
+  字幕语言。支持的语言及缩写请参考[PaddleOCR文档](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.10/docs/ppocr/blog/multi_languages.en.md#5-support-languages-and-abbreviations)。
   
 - `subtitle_position`
 
-  Specifies the alignment of subtitles in the video and allows for better text recognition.
+  指定字幕在视频中的对齐方式，有助于提升识别准确率。
 
 - `conf_threshold`
 
-  Confidence threshold for word predictions. Words with lower confidence than this value will be discarded. The default value `75` is fine for most cases. 
+  文字预测的置信度阈值。低于此值的文字将被忽略。默认值`75`适用于大多数场景。
 
-  Make it closer to 0 if you get too few words in each line, or make it closer to 100 if there are too many excess words in each line.
+  若每行文字过少，可降低此值；若每行文字过多，可提高此值。
 
 - `sim_threshold`
 
-  Similarity threshold for subtitle lines. Subtitle lines with larger [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) ratios than this threshold will be merged together. The default value `80` is fine for most cases.
+  字幕行的相似度阈值。基于[Levenshtein距离](https://en.wikipedia.org/wiki/Levenshtein_distance)，高于此阈值的字幕行将被合并。默认值`80`适用于大多数场景。
 
-  Make it closer to 0 if you get too many duplicated subtitle lines, or make it closer to 100 if you get too few subtitle lines.
+  若字幕行重复过多，可降低此值；若字幕行过少，可提高此值。
   
 - `ssim_threshold`
 
-  If the SSIM between consecutive frames exceeds this threshold, the frame is considered similar and skipped for OCR. A lower value can greatly reduce the number of images OCR needs to be performed on. On relatively tight crop boxes around the subtitle area good results could be seen with this value all the way lowered to 85.
+  若连续帧的SSIM超过此阈值，则跳过OCR。较低的值可减少OCR处理的帧数。在字幕区域裁剪较精确时，此值可降至85。
   
 - `post_processing`
 
-  This parameter adds a post processing step to the subtitle detection. The detected text will be analyzed for missing spaces (as this is a common issue with PaddleOCR) and tries to insert them automatically. Currently only available for English, Spanish, Portuguese, German, Italian and French. For more info check out my [wordninja-enhanced](https://github.com/timminator/wordninja-enhanced) repository.
+  启用后处理步骤，自动分析并修复缺失的空格（PaddleOCR常见问题）。目前仅支持英语、西班牙语、葡萄牙语、德语、意大利语和法语。详情请参考[wordninja-enhanced](https://github.com/timminator/wordninja-enhanced)仓库。
 
 - `max_merge_gap`
 
-  Maximum allowed time gap (in seconds) between two subtitles to be considered for merging if they are similar. The default value 0.09 (i.e., 90 milliseconds) works well in most scenarios.
+  合并相似字幕的最大时间间隔（秒）。默认值0.09（90毫秒）适用于大多数场景。
 
-  Increase this value if you notice that the output SRT file contains several subtitles with the same text that should be merged into a single one and are wrongly split into multiple ones. This can happen if the PaddleOCR OCR engine is not able to detect any text for a short amount of time while the subtitle is displayed in the selected video.
+  若发现相同字幕被错误分割为多条，可增加此值。
 
-- `time_start` and `time_end`
+- `time_start` 和 `time_end`
 
-  Extract subtitles from only a clip of the video. The subtitle timestamps are still calculated according to the full video length.
+  仅提取视频片段中的字幕。时间戳仍以完整视频长度计算。
 
 - `use_fullframe`
 
-  By default, the specified cropped area is used for OCR or if a crop is not specified, then the bottom third of the frame will be used. By setting this value to `True` the entire frame will be used.
+  默认使用裁剪区域或底部三分之一帧进行OCR。设为`True`时，将使用完整帧。
   
 - `use_dual_zone`
 
-  This parameter allows two specify two areas that will be used for OCR.
+  启用后，可指定两个OCR区域。
 
 - `crop_x(2)`, `crop_y(2)`, `crop_width(2)`, `crop_height(2)`
 
-  Specifies the bounding area(s) in pixels for the portion of the frame that will be used for OCR. See image below for example:
-  ![image](https://github.com/timminator/VideOCR/blob/master/Pictures/crop_example.png)
+  指定OCR区域的像素范围。示例见下图：
+  ![image](https://github.com/timminator/VideOCR/raw/master/Pictures/crop_example.png)
 
 - `use_gpu`
 
-  Set to `True` if performing OCR with GPU.
+  设为`True`时，使用GPU进行OCR。
 
 - `use_angle_cls`
 
-  Set to `True` if classification should be enabled.
+  设为`True`时，启用分类功能。
   
 - `brightness_threshold`
   
-  If set, pixels whose brightness are less than the threshold will be blackened out. Valid brightness values range from 0 (black) to 255 (white). This can help improve accuracy when performing OCR on videos with white subtitles.
-
+  若设置，亮度低于此阈值的像素将被置黑。有效范围为0（黑）至255（白）。适用于白色字幕的视频。
+  
 - `frames_to_skip`
 
-  The number of frames to skip before sampling a frame for OCR. Keep in mind the fps of the input video before increasing.
+  OCR前跳过的帧数。调整时需注意视频的fps。
   
 - `min_subtitle_duration`
 
-  Subtitles shorter than this threshold will be omitted from the final subtitle file.
+  短于此阈值的字幕将被忽略。
 
 - `use_server_model`
 
-  By default the smaller model are used for the OCR process. This parameter enables the usage of the server models for OCR. This can result in better text detection at the cost of more processing power. Should only ever be used in the GPU version.
+  默认使用轻量模型进行OCR。启用后将使用服务器模型，提升检测效果，但会消耗更多资源。建议仅在GPU版本中使用。
 
+## 构建与编译说明
 
-## Build and Compile Instructions
-
-- Requirements:
-    - Python 3.9 or higher
-
+- 要求：
+    - Python 3.9或更高版本
     - Windows:
-        - C++ Build Tools (e.g Visual Studio with "Desktop development with C++" kit installed)
-        - 7zip (needs to be available from path)
-        - Tkinter (comes with the default python installation on Windows)
-
+        - C++构建工具（如Visual Studio的“使用C++的桌面开发”套件）
+        - 7zip（需添加到PATH）
+        - Tkinter（Windows默认Python安装包含）
     - Linux:
         - Tkinter
-        - Working dbus installation is recommended
+        - 建议安装dbus
 
-- Instructions:
-
-    - Clone the repository to your desired location:
+- 步骤：
+    - 克隆仓库到目标位置：
       ```bash
       git clone https://github.com/timminator/VideOCR.git
       ```
-    - Navigate into the cloned folder and install all dependencies:
+    - 进入目录并安装依赖：
       ```bash
       cd VideOCR
       pip install -e ".[dev]"
       ```
-    - Execute the build script to create the desired build:
+    - 运行构建脚本：
       ```bash
       python build.py --target cpu
       ```
-    More info can be found via:
+    更多信息可通过以下命令查看：
     ```bash
     python build.py -h
     ```
